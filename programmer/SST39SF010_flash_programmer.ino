@@ -90,8 +90,8 @@ void setAddress(unsigned long addr) {
 
   // Write the address bits
   digitalWrite(ADDR_16, byte2 & 1);
-  shiftOut(ADDR_SER, CLK, LSBFIRST, byte1);
-  shiftOut(ADDR_SER, CLK, LSBFIRST, byte0);
+  shiftOut(ADDR_SER, CLK, MSBFIRST, byte1);
+  shiftOut(ADDR_SER, CLK, MSBFIRST, byte0);
   // Pulse on the latch to output the value
   digitalWrite(LATCH, LOW);
   digitalWrite(LATCH, HIGH);

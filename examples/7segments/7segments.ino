@@ -90,8 +90,8 @@ void setAddress(unsigned long addr) {
 
   // Write the address bits
   digitalWrite(ADDR_16, byte2 & 1);
-  shiftOut(ADDR_SER, CLK, LSBFIRST, byte1);
-  shiftOut(ADDR_SER, CLK, LSBFIRST, byte0);
+  shiftOut(ADDR_SER, CLK, MSBFIRST, byte1);
+  shiftOut(ADDR_SER, CLK, MSBFIRST, byte0);
   // Pulse on the latch to output the value
   digitalWrite(LATCH, LOW);
   digitalWrite(LATCH, HIGH);
@@ -297,7 +297,7 @@ void setup() {
   Serial.println("Programming hundreds place");
   for (int value = 0; value <= 255; value ++)
     writeMem(value + 0x200, digits[(value / 100) % 10]);
-  Serial.println("Programming sign");
+  Serial.println("Programming empty");
   for (int value = 0; value <= 255; value ++)
     writeMem(value + 0x300, 0x00);
 
@@ -324,14 +324,14 @@ void setup() {
   Serial.println("Positive hex");
   Serial.println("Programming ones place");
   for (int value = 0; value <= 255; value ++)
-    writeMem(value + 0x800, digits[value % 16]);
+    writeMem(value + 0x800, digits[value % 0x10]);
   Serial.println("Programming tens place");
   for (int value = 0; value <= 255; value ++)
-    writeMem(value + 0x900, digits[(value / 0xf) % 16]);
-  Serial.println("Programming hundreds place");
+    writeMem(value + 0x900, digits[(value / 0x10) % 0x10]);
+  Serial.println("Programming empty");
   for (int value = 0; value <= 255; value ++)
-    writeMem(value + 0xa00, digits[(value / 0xff) % 16]);
-  Serial.println("Programming sign");
+    writeMem(value + 0xa00, 0);
+  Serial.println("Programming empty");
   for (int value = 0; value <= 255; value ++)
     writeMem(value + 0xb00, 0);
 
